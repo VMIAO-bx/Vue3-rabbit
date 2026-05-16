@@ -1,18 +1,6 @@
 <script setup>
-import { getCategoryAPI } from "@/apis/layout";
-import { onMounted, ref } from "vue";
-//定义分类列表，初始为空数组
-const categoryList = ref([]);
-//定义一个获取列表的函数，将获取到的值赋给categoryList
-const getCategory = async () => {
-  const res = await getCategoryAPI();
-  categoryList.value = res.result;
-};
-
-//在页面加载完毕时就调用获取列表的函数
-onMounted(() => {
-  getCategory();
-});
+import { useCategoryStore } from "@/stores/category";
+const categoryStore = useCategoryStore();
 </script>
 
 <template>
@@ -22,7 +10,8 @@ onMounted(() => {
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home" v-for="item in categoryList" :key="item.id">
+        <li class="home"><RouterLink to="/">首页</RouterLink></li>
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
           <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
