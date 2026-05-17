@@ -1,14 +1,15 @@
 <script setup>
 import { getTopCategoryAPI } from "@/apis/category";
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { getBannerAPI } from "@/apis/home";
 import GoodsItem from "../Home/components/GoodsItem.vue";
+
 //获取分类数据
 const categoryData = ref({});
 const route = useRoute();
-const getTopCategory = async () => {
-  const res = await getTopCategoryAPI(route.params.id);
+const getTopCategory = async (id = route.params.id) => {
+  const res = await getTopCategoryAPI(id);
   categoryData.value = res.result;
   console.log(categoryData);
 };
@@ -24,6 +25,12 @@ const getBanner = async () => {
 onMounted(() => {
   getBanner();
   getTopCategory();
+});
+
+//在路由变化时重新发起请求
+onBeforeRouteUpdate((to) => {
+  //to就是新的路由对象
+  getTopCategory(to.params.id);
 });
 </script>
 
