@@ -1,37 +1,11 @@
 <script setup>
-import { getTopCategoryAPI } from "@/apis/category";
-import { ref, onMounted } from "vue";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
-import { getBannerAPI } from "@/apis/home";
 import GoodsItem from "../Home/components/GoodsItem.vue";
-
+import { useBanner } from "./composables/useBanner";
+import { useCategory } from "./composables/useCategory";
 //获取分类数据
-const categoryData = ref({});
-const route = useRoute();
-const getTopCategory = async (id = route.params.id) => {
-  const res = await getTopCategoryAPI(id);
-  categoryData.value = res.result;
-  console.log(categoryData);
-};
+const { categoryData } = useCategory();
 //获取轮播图数据
-const bannerList = ref([0]);
-const getBanner = async () => {
-  const res = await getBannerAPI({
-    distributionSite: "2",
-  });
-  bannerList.value = res.result;
-};
-
-onMounted(() => {
-  getBanner();
-  getTopCategory();
-});
-
-//在路由变化时重新发起请求
-onBeforeRouteUpdate((to) => {
-  //to就是新的路由对象
-  getTopCategory(to.params.id);
-});
+const { bannerList } = useBanner();
 </script>
 
 <template>
