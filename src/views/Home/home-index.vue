@@ -1,7 +1,8 @@
 <template>
-  <div>我是home页</div>
-  <HomeCategory />
-  <HomeBanner />
+  <div class="container">
+    <HomeCategory />
+    <HomeBanner />
+  </div>
   <HomeHot />
   <HomeNew />
   <HomeProducts />
@@ -13,4 +14,8 @@ import HomeNew from "./components/HomeNew.vue";
 import HomeHot from "./components/HomeHot.vue";
 import HomeProducts from "./components/HomeProducts.vue";
 </script>
-<style></style>
+<style>
+.container {
+  position: relative;
+}
+</style>
