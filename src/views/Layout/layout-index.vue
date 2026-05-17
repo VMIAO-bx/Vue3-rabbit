@@ -3,9 +3,9 @@
     <LayoutFixed />
     <LayoutNav />
     <LayoutHeader />
-    <LayoutFooter />
     <!-- 二级路由出口 -->
     <RouterView />
+    <LayoutFooter />
   </div>
 </template>
 <script setup>
