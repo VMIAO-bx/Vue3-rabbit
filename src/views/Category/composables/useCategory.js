@@ -9,7 +9,6 @@ export function useCategory() {
   const getTopCategory = async (id = route.params.id) => {
     const res = await getTopCategoryAPI(id);
     categoryData.value = res.result;
-    console.log(categoryData);
   };
   onMounted(() => {
     getTopCategory();

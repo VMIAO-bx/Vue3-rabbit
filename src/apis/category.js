@@ -8,3 +8,13 @@ export function getTopCategoryAPI(id) {
     },
   });
 }
+
+//封装二级分类入口
+export function getCategoryFilterAPI(id) {
+  return httpInstance({
+    url: "/category/sub/filter",
+    params: {
+      id,
+    },
+  });
+}
