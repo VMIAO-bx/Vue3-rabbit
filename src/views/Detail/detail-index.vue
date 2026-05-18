@@ -2,7 +2,10 @@
 import { getDetailAPI } from "@/apis/detail";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import DetailHot from "./components/DetailHot.vue";
 
+//调用封装接口
+//动态渲染数据
 const goods = ref({});
 const route = useRoute();
 const getDetail = async () => {
@@ -118,7 +121,12 @@ onMounted(() => {
               </div>
             </div>
             <!-- 24热榜+专题推荐 -->
-            <div class="goods-aside"></div>
+            <div class="goods-aside">
+              <!-- 24小时热榜 -->
+              <DetailHot :hotType="1" />
+              <!-- 周热榜 -->
+              <DetailHot :hotType="2" />
+            </div>
           </div>
         </div>
       </div>
