@@ -3,6 +3,7 @@ import { getDetailAPI } from "@/apis/detail";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import DetailHot from "./components/DetailHot.vue";
+import ImgView from "@/components/ImageView/ImgView-Index.vue";
 
 //调用封装接口
 //动态渲染数据
@@ -42,7 +43,7 @@ onMounted(() => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-
+              <ImgView />
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
