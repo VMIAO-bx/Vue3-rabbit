@@ -18,3 +18,11 @@ export function getCategoryFilterAPI(id) {
     },
   });
 }
+//获取基础商品列表
+export function getSubCategoryAPI(data) {
+  return httpInstance({
+    url: "/category/goods/temporary",
+    method: "POST",
+    data,
+  });
+}
