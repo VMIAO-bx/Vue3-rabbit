@@ -3,7 +3,6 @@ import { getDetailAPI } from "@/apis/detail";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import DetailHot from "./components/DetailHot.vue";
-import ImgView from "@/components/ImageView/ImgView-Index.vue";
 
 //调用封装接口
 //动态渲染数据
@@ -13,6 +12,7 @@ const getDetail = async () => {
   const res = await getDetailAPI(route.params.id);
   goods.value = res.result;
 };
+
 onMounted(() => {
   getDetail();
 });
@@ -20,8 +20,8 @@ onMounted(() => {
 
 <template>
   <div class="xtx-goods-page">
-    <div class="container" v-if="goods.categories">
-      <div class="bread-container">
+    <div class="container">
+      <div class="bread-container" v-if="goods.categories">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <!-- 错误原因--detailList一开始是空对象--返回undefined，无法取到数据
@@ -43,7 +43,7 @@ onMounted(() => {
           <div class="goods-info">
             <div class="media">
               <!-- 图片预览区 -->
-              <ImgView />
+              <XtxImageView :image-list="goods.mainPictures" />
               <!-- 统计数量 -->
               <ul class="goods-sales">
                 <li>
@@ -92,7 +92,7 @@ onMounted(() => {
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="goods" />
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
@@ -108,7 +108,7 @@ onMounted(() => {
                 <nav>
                   <a>商品详情</a>
                 </nav>
-                <div class="goods-detail">
+                <div class="goods-detail" v-if="goods.details">
                   <!-- 属性 -->
                   <ul class="attrs">
                     <li v-for="item in goods.details.properties" :key="item.value">
