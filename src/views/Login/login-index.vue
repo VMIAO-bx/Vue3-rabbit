@@ -4,6 +4,7 @@ import { ref } from "vue";
 const from = ref({
   account: "",
   passward: "",
+  agree: true,
 });
 
 //2.准备规则对象
@@ -12,6 +13,13 @@ const rules = {
   passward: [
     { required: true, message: "密码不能为空", trigger: "blur" },
     { min: 6, max: 14, message: "密码长度要在6-14个字符", trigger: "blur" },
+  ],
+  agree: [
+    {
+      validator: (rule, value, callback) => {
+        return value ? callback() : new Error("请先同意协议");
+      },
+    },
   ],
 };
 </script>
@@ -50,8 +58,10 @@ const rules = {
               <el-form-item label="密码" prop="passward">
                 <el-input v-model="from.passward" />
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox size="large"> 我已同意隐私条款和服务条款 </el-checkbox>
+              <el-form-item prop="agree" label-width="22px">
+                <el-checkbox v-model="from.agree" size="large">
+                  我已同意隐私条款和服务条款
+                </el-checkbox>
               </el-form-item>
               <el-button size="large" class="subBtn">点击登录</el-button>
             </el-form>
