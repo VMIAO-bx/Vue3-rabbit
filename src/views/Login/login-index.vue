@@ -1,12 +1,15 @@
 <script setup>
 import { ref } from "vue";
-import { loginAPI } from "@/apis/user";
 //这里调用useRouter,用来在登录成功的状态下，路由跳转回首页
 import { useRouter } from "vue-router";
-
 //导入el的弹出框以及样式，这里用来在用户登录失败/成功情况下弹出提示框
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
+//使用pinia集中管理用户数据
+import { useUserStore } from "@/stores/user";
+
+const userStore = useUserStore();
+
 //1.准备表单对象并绑定
 const form = ref({
   account: "",
@@ -39,7 +42,7 @@ const doLogin = () => {
   formRef.value.validate(async (valid) => {
     if (valid) {
       //这里写如果表单校验成功，则调用接口，发送请求
-      await loginAPI({ account, password });
+      await userStore.getUserInfo({ account, password });
       //弹出成功的提示框
       ElMessage({ type: "success", message: "登录成功" });
       router.replace({ path: "/" });
