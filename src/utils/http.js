@@ -4,6 +4,8 @@ import axios from "axios";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
 import { useUserStore } from "@/stores/user";
+import router from "@/router";
+
 //创建axios实例
 const httpInstance = axios.create({
   //根域名
@@ -34,6 +36,15 @@ httpInstance.interceptors.response.use(
       type: "warning",
       message: e.response.data.message,
     });
+
+    //401报错时
+    //1.清空用户登录数据
+    //2.跳转路由到登录界面
+    if (e.response.status === 401) {
+      const userStore = useUserStore();
+      userStore.clearUserInfo();
+      router.push("/login");
+    }
     return Promise.reject(e);
   },
 );
