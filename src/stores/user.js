@@ -14,10 +14,15 @@ export const useUserStore = defineStore(
       userInfo.value = res.result;
     };
 
+    //清除用户数据
+    const clearUserInfo = () => {
+      userInfo.value = {};
+    };
     //3.以对象的格式把useInfo和getUserInfo以对象的格式 return出去
     return {
       userInfo,
       getUserInfo,
+      clearUserInfo,
     };
   },
   {
