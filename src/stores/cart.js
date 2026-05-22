@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 export const useCartStore = defineStore(
   "cart",
@@ -24,8 +24,18 @@ export const useCartStore = defineStore(
       //使用filter过滤实现删除效果
       cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
     };
+
+    //定义计算属性 总价钱allCount 商品总数量allCount
+    const allCount = computed(() => {
+      return cartList.value.reduce((a, c) => a + c.count, 0);
+    });
+    const allPrice = computed(() => {
+      return cartList.value.reduce((a, c) => a + c.count * c.price, 0);
+    });
     return {
       cartList,
+      allCount,
+      allPrice,
       addCart,
       delCart,
     };
