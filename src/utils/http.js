@@ -4,7 +4,7 @@ import axios from "axios";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
 import { useUserStore } from "@/stores/user";
-import router from "@/router";
+import router from "@/router/index";
 
 //创建axios实例
 const httpInstance = axios.create({
@@ -19,7 +19,7 @@ httpInstance.interceptors.request.use(
   (config) => {
     //1.首先获取到用户的token
     const userStore = useUserStore();
-    const token = userStore.userInfo.token;
+    const token = userStore.userInfo?.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -32,15 +32,15 @@ httpInstance.interceptors.request.use(
 httpInstance.interceptors.response.use(
   (res) => res.data,
   (e) => {
+    const message = e.response?.data?.message || "网络请求失败，请稍后重试";
     ElMessage({
       type: "warning",
-      message: e.response.data.message,
+      message,
     });
-
     //401报错时
     //1.清空用户登录数据
     //2.跳转路由到登录界面
-    if (e.response.status === 401) {
+    if (e.response?.status === 401) {
       const userStore = useUserStore();
       userStore.clearUserInfo();
       router.push("/login");
