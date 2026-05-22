@@ -19,9 +19,15 @@ export const useCartStore = defineStore(
       }
     };
 
+    //点击删除商品的方法
+    const delCart = (skuId) => {
+      //使用filter过滤实现删除效果
+      cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
+    };
     return {
       cartList,
       addCart,
+      delCart,
     };
   },
   {
