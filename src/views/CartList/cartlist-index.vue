@@ -5,6 +5,10 @@ const cartStore = useCartStore();
 const singleCheck = (skuId, selected) => {
   cartStore.singleCheck(skuId, selected);
 };
+//给全选框绑定事件
+const allCheck = (selected) => {
+  cartStore.allCheck(selected);
+};
 </script>
 
 <template>
@@ -15,7 +19,7 @@ const singleCheck = (skuId, selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox />
+                <el-checkbox :model-value="cartStore.isAll" @change="allCheck" />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>

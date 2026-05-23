@@ -27,7 +27,7 @@ export const useCartStore = defineStore(
 
     //本地购物车--头部购物车--列表单选框改变，则改变商品selected的属性值
     const singleCheck = (skuId, selected) => {
-      const item = cartList.value.find((item) => (item.skuId = skuId));
+      const item = cartList.value.find((item) => item.skuId === skuId);
       item.selected = selected;
     };
 
@@ -38,13 +38,22 @@ export const useCartStore = defineStore(
     const allPrice = computed(() => {
       return cartList.value.reduce((a, c) => a + c.count * c.price, 0);
     });
+
+    //是否全选
+    const isAll = computed(() => cartList.value.every((item) => item.selected));
+    //全选框选中时/未选中时，所有商品的selected的值都要与该框保持一致
+    const allCheck = (selected) => {
+      cartList.value.forEach((item) => (item.selected = selected));
+    };
     return {
       cartList,
       allCount,
       allPrice,
+      isAll,
       addCart,
       delCart,
       singleCheck,
+      allCheck,
     };
   },
   {
