@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import { useUserStore } from "./user";
-import { insertCartAPI, findNewCartListAPI } from "@/apis/cart";
+import { insertCartAPI, findNewCartListAPI, delCartAPI } from "@/apis/cart";
 
 export const useCartStore = defineStore(
   "cart",
@@ -16,10 +16,7 @@ export const useCartStore = defineStore(
       if (isLogin.value) {
         //执行登录后添加到购物车的操作
         await insertCartAPI({ skuId, count });
-        const res = await findNewCartListAPI();
-
-        //最新购物车列表覆盖本地购物车列表
-        cartList.value = res.result;
+        updateList();
       } else {
         const item = cartList.value.find((item) => goods.skuId === item.skuId);
         if (item) {
@@ -35,15 +32,27 @@ export const useCartStore = defineStore(
     };
 
     //点击删除商品的方法
-    const delCart = (skuId) => {
+    const delCart = async (skuId) => {
       //使用filter过滤实现删除效果
-      cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
+      if (isLogin.value) {
+        //调用接口，实现删除功能
+        await delCartAPI([skuId]);
+        updateList();
+      } else {
+        cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
+      }
     };
 
     //本地购物车--头部购物车--列表单选框改变，则改变商品selected的属性值
     const singleCheck = (skuId, selected) => {
       const item = cartList.value.find((item) => item.skuId === skuId);
       item.selected = selected;
+    };
+
+    //获取最新列表
+    const updateList = async () => {
+      const res = await findNewCartListAPI();
+      cartList.value = res.result;
     };
 
     //定义计算属性 总价钱allCount 商品总数量allCount
