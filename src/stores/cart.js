@@ -55,6 +55,11 @@ export const useCartStore = defineStore(
       cartList.value = res.result;
     };
 
+    //清空购物车数据
+    const clearCartList = () => {
+      cartList.value = [];
+    };
+
     //定义计算属性 总价钱allCount 商品总数量allCount
     const allCount = computed(() => {
       return cartList.value.reduce((a, c) => a + c.count, 0);
@@ -89,6 +94,7 @@ export const useCartStore = defineStore(
       delCart,
       singleCheck,
       allCheck,
+      clearCartList,
     };
   },
   {
