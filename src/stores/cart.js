@@ -25,6 +25,12 @@ export const useCartStore = defineStore(
       cartList.value = cartList.value.filter((item) => item.skuId !== skuId);
     };
 
+    //本地购物车--头部购物车--列表单选框改变，则改变商品selected的属性值
+    const singleCheck = (skuId, selected) => {
+      const item = cartList.value.find((item) => (item.skuId = skuId));
+      item.selected = selected;
+    };
+
     //定义计算属性 总价钱allCount 商品总数量allCount
     const allCount = computed(() => {
       return cartList.value.reduce((a, c) => a + c.count, 0);
@@ -38,6 +44,7 @@ export const useCartStore = defineStore(
       allPrice,
       addCart,
       delCart,
+      singleCheck,
     };
   },
   {

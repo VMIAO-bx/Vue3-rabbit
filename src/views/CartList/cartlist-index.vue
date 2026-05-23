@@ -1,6 +1,10 @@
 <script setup>
 import { useCartStore } from "@/stores/cart";
 const cartStore = useCartStore();
+//给单选框绑定事件，在点击时，获取到对应商品（id）的选中状态，同步修改pinia里面的数据
+const singleCheck = (skuId, selected) => {
+  cartStore.singleCheck(skuId, selected);
+};
 </script>
 
 <template>
@@ -24,7 +28,10 @@ const cartStore = useCartStore();
           <tbody>
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
-                <el-checkbox />
+                <el-checkbox
+                  :model-value="i.selected"
+                  @change="(selected) => singleCheck(i.skuId, selected)"
+                />
               </td>
               <td>
                 <div class="goods">
