@@ -11,7 +11,7 @@ const httpInstance = axios.create({
   //根域名
   baseURL: "http://pcapi-xiaotuxian-front-devtest.itheima.net",
   //超时时间
-  timeout: 50000,
+  timeout: 10000,
 });
 
 //axios请求拦截器

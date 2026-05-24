@@ -25,6 +25,13 @@ const getUserOrder = async () => {
   // total.value = res.result.counts
   console.log(res);
 };
+
+//tab栏切换时更改orderState
+const tabChange = (type) => {
+  params.value.orderState = type;
+  //重新发送请求
+  getUserOrder();
+};
 onMounted(() => {
   getUserOrder();
 });
@@ -32,7 +39,7 @@ onMounted(() => {
 
 <template>
   <div class="order-container">
-    <el-tabs>
+    <el-tabs @tab-change="tabChange">
       <!-- tab切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
