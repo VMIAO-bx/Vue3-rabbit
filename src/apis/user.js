@@ -12,3 +12,13 @@ export const loginAPI = ({ account, password }) => {
     },
   });
 };
+
+//封装 会员中心--个人中心--猜你喜欢
+export const getLikesListAPI = ({ limit = 4 }) => {
+  return httpInstance({
+    url: "/goods/relevant",
+    params: {
+      limit,
+    },
+  });
+};
