@@ -18,16 +18,16 @@ onMounted(() => {
   <div class="home-product">
     <HomePannel :title="cate.name" v-for="cate in goodsProduct" :key="cate.id">
       <div class="box">
-        <RouterLink class="cover" to="/">
+        <RouterLink class="cover" :to="`/category/${cate.id}`">
           <img v-img-lazy="cate.picture" />
           <strong class="label">
-            <span>{{ cate.name }}馆</span>
+            <span>{{ cate.name }}</span>
             <span>{{ cate.saleInfo }}</span>
           </strong>
         </RouterLink>
         <ul class="goods-list">
           <li v-for="good in cate.goods" :key="good.id">
-            <GoodsItem :good="good"> </GoodsItem>
+            <GoodsItem :good="good" @click="$router.push(`/detail/${good.id}`)"> </GoodsItem>
           </li>
         </ul>
       </div>

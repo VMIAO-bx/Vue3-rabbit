@@ -1,13 +1,14 @@
 <script setup>
 import { useCategoryStore } from "@/stores/category";
 const categoreStore = useCategoryStore();
+console.log(categoreStore.categoryList);
 </script>
 
 <template>
   <div class="home-category">
     <ul class="menu">
       <li v-for="item in categoreStore.categoryList" :key="item.id">
-        <RouterLink to="/">{{ item.name }}</RouterLink>
+        <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         <RouterLink v-for="i in item.children.slice(0, 2)" :key="i.id" to="/">{{
           i.name
         }}</RouterLink>
@@ -16,7 +17,7 @@ const categoreStore = useCategoryStore();
           <h4>分类推荐 <small>根据您的购买或浏览记录推荐</small></h4>
           <ul>
             <li v-for="i in item.goods" :key="i.id">
-              <RouterLink to="/">
+              <RouterLink :to="`/detail/${i.id}`">
                 <img :src="i.picture" />
                 <div class="info">
                   <p class="name ellipsis-2">{{ i.name }}</p>
