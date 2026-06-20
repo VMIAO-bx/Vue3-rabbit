@@ -11,6 +11,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import ElementPlus from "unplugin-element-plus/vite";
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/Vue3-rabbit/',
   plugins: [
     vue(),
     vueDevTools(),
