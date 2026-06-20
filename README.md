@@ -4,7 +4,7 @@
 
 ## 在线预览
 
-> 部署后替换为实际链接
+https://vmiao-bx.github.io/Vue3-rabbit/
 
 ## 功能模块
 
